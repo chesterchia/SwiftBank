@@ -1,0 +1,7 @@
+.github
+dist
+.git
+*Dockerfile*
+*docker-compose*
+node_modules
+load_test
