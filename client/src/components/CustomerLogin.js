@@ -24,8 +24,8 @@ const CustomerLogin = ()=>{
         <input type="text" className="form-control" id="exampleInputPassword1"   required/>
       </div>
 
-      <button type="submit" className="btn btn-primary btn-lg mt-3">Login</button>
-    </div>
+      <button type="submit" className="btn btn-primary btn-lg mt-3" onClick={handleLogin}>Login</button>
+    </div>  
 </div>
 </div>
     );
