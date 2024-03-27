@@ -192,7 +192,7 @@ const CustomerControl = ()=>{
   
 
 {MyAccounts.map(account => (
-<form action='http://localhost:3000/customer/transaction' method='GET'>
+<form action='http://swift-bank.s3-website-ap-southeast-1.amazonaws.com/customer/transaction' method='GET'>
 <div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key = {account.account_id}>
 
 <hr className='mt-5'></hr>
