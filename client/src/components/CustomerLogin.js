@@ -104,59 +104,24 @@ const CustomerLogin = () => {
                 Customer Login
             </h1>
             <div
-                className="border container p-0 shadow-lg p-3 mb-5 bg-white rounded "
-                style={{ display: "flex", justifyContent: "center" }}
+                className="border container p-0 shadow-lg p-3 mb-5 bg-white rounded"
             >
-                <img
-                    src={customer}
-                    alt="customer missing"
-                    className="rounded mx-auto d-block ml-10 mr-10 flex-left p-5"
-                    height="400px"
-                ></img>
-                {/* <form className='container flex-right p-5 ' style={{alignSelf : "right"}} action='http://localhost:3000/customer' > */}
-                {/* <form
-                    className="container flex-right p-5 "
-                    style={{ alignSelf: "right" }}
-                    onSubmit={handleLogin}
-                > */}
-                {/* <form
-                    className="container flex-right p-5 "
-                    style={{ alignSelf: "right" }}
-                    onSubmit={onSubmit}
-                >
-                    <div className="form-group">
-                        <label className="mt-4">Username</label>
-                        <input
-                            type="text"
-                            className="form-control mb-3"
-                            id="exampleInputEmail1"
-                            name="username"
-                            aria-describedby="emailHelp"
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                        <label>Password</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="exampleInputPassword1"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <p className="mt-2">{error}</p>
-                        <button>Forgot Password?</button>
-                    </div>
+                <div className='row'>
+                    <img
+                        src={customer}
+                        alt="customer missing"
+                        className="rounded mx-auto d-block ml-10 mr-10 col p-5"
+                        height="500vh"
+                    ></img>
 
-                    <button
-                        type="submit"
-                        className="btn btn-primary btn-lg mt-3"
-                    >
-                        Login
-                    </button>
-                </form> */}
-                {formState === "login" && (
-                    <form
-                        className="container flex-right p-5"
+                    {/* <form className='container flex-right p-5 ' style={{alignSelf : "right"}} action='http://localhost:3000/customer' > */}
+                    {/* <form
+                        className="container flex-right p-5 "
+                        style={{ alignSelf: "right" }}
+                        onSubmit={handleLogin}
+                    > */}
+                    {/* <form
+                        className="container flex-right p-5 "
                         style={{ alignSelf: "right" }}
                         onSubmit={onSubmit}
                     >
@@ -165,113 +130,152 @@ const CustomerLogin = () => {
                             <input
                                 type="text"
                                 className="form-control mb-3"
+                                id="exampleInputEmail1"
+                                name="username"
+                                aria-describedby="emailHelp"
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                             <label>Password</label>
                             <input
-                                type="password"
+                                type="text"
                                 className="form-control"
+                                id="exampleInputPassword1"
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                             <p className="mt-2">{error}</p>
-                            <button
-                                type="button"
-                                className="btn btn-link"
-                                onClick={() => setFormState("forgotPassword")}
-                            >
-                                Forgot Password?
-                            </button>
+                            <button>Forgot Password?</button>
                         </div>
+
                         <button
                             type="submit"
                             className="btn btn-primary btn-lg mt-3"
                         >
                             Login
                         </button>
-                    </form>
-                )}
-                {formState === "forgotPassword" && (
-                    <form
-                        className="container flex-right p-5"
-                        style={{ alignSelf: "right" }}
-                        onSubmit={sendResetLink}
-                    >
-                        <div className="form-group">
-                            <p>
-                                An email verification code will
-                                be sent to the email address linked with
-                                your username. Kindly check both
-                                your email inbox and spam folder for the
-                                verification code.
-                            </p>
-                            <label>Username</label>
-                            <input
-                                type="text"
-                                className="form-control mb-3"
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                            <p className="mt-2">{error}</p>
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary btn-lg mt-3"
+                    </form> */}
+                    {formState === "login" && (
+                        <form
+                            className="container col p-5"
+                            style={{ alignSelf: "right" }}
+                            onSubmit={onSubmit}
                         >
-                            Send Reset Link
-                        </button>
-                        <div></div>
-                        <button
-                            type="button"
-                            className="btn btn-link"
-                            onClick={() => setFormState("login")}
+                            <div className="form-group">
+                                <label className="mt-4">Username</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
+                                />
+                                <label className="mt-4">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <p className="mt-4">{error}</p>
+                                <button
+                                    type="button"
+                                    className="btn btn-link p-0"
+                                    onClick={() => setFormState("forgotPassword")}
+                                >
+                                    Forgot Password?
+                                </button>
+                                <br></br>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary btn-lg my-4"
+                                >
+                                    Login
+                                </button>                        
+                                <p>Not a Swift Bank user? <a href="/customer/signup">Sign Up here</a></p>
+                            </div>
+                        </form>
+                    )}
+                    {formState === "forgotPassword" && (
+                        <form
+                            className="container flex-right p-5"
+                            style={{ alignSelf: "right" }}
+                            onSubmit={sendResetLink}
                         >
-                            Back to Login
-                        </button>
-                    </form>
-                )}
-                {formState === "resetPassword" && (
-                    <form
-                        className="container flex-right p-5"
-                        style={{ alignSelf: "right" }}
-                        onSubmit={resetPassword}
-                    >
-                        <div className="form-group">
-                            <label>New Password</label>
-                            <input
-                                type="password"
-                                className="form-control mb-3"
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                            />
-                            <label>Verification Code</label>
-                            <input
-                                type="password"
-                                className="form-control mb-3"
-                                onChange={(e) =>
-                                    setVerificationCode(e.target.value)
-                                }
-                                required
-                            />
-                            <p className="mt-2">{error}</p>
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary btn-lg mt-3"
+                            <div className="form-group">
+                                <p>
+                                    An email verification code will
+                                    be sent to the email address linked with
+                                    your username. Kindly check both
+                                    your email inbox and spam folder for the
+                                    verification code.
+                                </p>
+                                <label>Username</label>
+                                <input
+                                    type="text"
+                                    className="form-control mb-3"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
+                                />
+                                <p className="mt-2">{error}</p>
+                            </div>
+                            <button
+                                type="submit"
+                                className="btn btn-primary btn-lg mt-3"
+                            >
+                                Send Reset Link
+                            </button>
+                            <div></div>
+                            <button
+                                type="button"
+                                className="btn btn-link"
+                                onClick={() => setFormState("login")}
+                            >
+                                Back to Login
+                            </button>
+                        </form>
+                    )}
+                    {formState === "resetPassword" && (
+                        <form
+                            className="container flex-right p-5"
+                            style={{ alignSelf: "right" }}
+                            onSubmit={resetPassword}
                         >
-                            Reset Password
-                        </button>
-                        <div></div>
-                        <button
-                            type="button"
-                            className="btn btn-link"
-                            onClick={() => setFormState("login")}
-                        >
-                            Back to Login
-                        </button>
-                    </form>
-                )}
+                            <div className="form-group">
+                                <label>New Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control mb-3"
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required
+                                />
+                                <label>Verification Code</label>
+                                <input
+                                    type="password"
+                                    className="form-control mb-3"
+                                    onChange={(e) =>
+                                        setVerificationCode(e.target.value)
+                                    }
+                                    required
+                                />
+                                <p className="mt-2">{error}</p>
+                            </div>
+                            <button
+                                type="submit"
+                                className="btn btn-primary btn-lg mt-3"
+                            >
+                                Reset Password
+                            </button>
+                            <div></div>
+                            <button
+                                type="button"
+                                className="btn btn-link"
+                                onClick={() => setFormState("login")}
+                            >
+                                Back to Login
+                            </button>
+                        </form>
+                    )}
+                </div>
             </div>
         </div>
     );

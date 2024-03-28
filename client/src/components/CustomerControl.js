@@ -75,7 +75,7 @@ const CustomerControl = ()=>{
             const username = temp[1];
             const query = await fetch(`http://13.212.206.255:5000/customer/${username}`);
             // const query = await fetch(`http://localhost:5000/customer/${username}`);
-            const data = await query.json();
+            const data = query.json();
             console.log(data);
             setID(data['customer_id']);
             setName(data['name']);
@@ -84,7 +84,7 @@ const CustomerControl = ()=>{
             setHouse(data['house_no']);
             setCity(data['city']);
             setZipCode(data['zipcode']);
-            setUsername(data['username']);
+            setUsername(username);
             
         } catch (error) {
             console.log(error);

@@ -54,6 +54,7 @@ const CustomerSignup = () => {
             if (err) {
                 console.log("error")
                 console.error(err);
+                setSignUpError(err.message || JSON.stringify(err));
             } else {
                 console.log(result)
                 console.log('Registration confirmed');
@@ -90,80 +91,84 @@ const CustomerSignup = () => {
                     <img src={customer} alt="customer missing" className="rounded mx-auto d-block ml-10 mr-10 col p-5" height="500vh"></img>                
                     
                     {!showConfirmationForm && (
-                    // <form className='container col p-5 ' style={{alignSelf : "right"}}  onSubmit={onSubmit}>
-                    
-                    <div className="container col p-5 form-group">
-                        <label className="mt-4">Username</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="exampleInputUsername" 
-                            name="username" 
-                            aria-describedby="usernameHelp" 
-                            value={username}
-                            onChange={(event) => setUsername(event.target.value)} 
-                            required
-                        />
-                        <label className="mt-4">Email</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="exampleInputEmail" 
-                            name="email" 
-                            aria-describedby="emailHelp" 
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)} 
-                            required
-                        />
-                        <label className="mt-4">Password</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="exampleInputPassword" 
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}  required
-                        />
+                    <form className='container col p-5 ' style={{alignSelf : "right"}}  onSubmit={onSubmit}>
 
-                        <button 
-                            type="submit" 
-                            className="btn btn-primary btn-lg my-4" 
-                            onclick={onSubmit}>
+                        {/* Display sign-up error message if sign-up fails */}
+                        {signUpError && <p className='text-danger'>{signUpError}</p>}
+
+                        <div className="form-group">
+                            <label className="mt-4">Username</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="exampleInputUsername" 
+                                name="username" 
+                                aria-describedby="usernameHelp" 
+                                value={username}
+                                onChange={(event) => setUsername(event.target.value)} 
+                                required
+                            />
+                            <label className="mt-4">Email</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="exampleInputEmail" 
+                                name="email" 
+                                aria-describedby="emailHelp" 
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)} 
+                                required
+                            />
+                            <label className="mt-4">Password</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="exampleInputPassword" 
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}  required
+                            />
+
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary btn-lg my-4" 
+                            >
                                 Sign Up
-                        </button>
+                            </button>
 
-                        <p>Already a Swift Bank user? <a href="/customer/login">Log In here</a></p>
-
-                    </div>
-                    /* </form> */
+                            <p>Already a Swift Bank user? <a href="/customer/login">Log In here</a></p>
+                        </div>
+                    </form>
                     )}
                 
 
                     {/* Render confirmation form if showConfirmationForm is true */}
                     {showConfirmationForm && (
-                        // <form className='container flex-right p-5' style={{alignSelf : "right"}}  onSubmit={confirmSignUp}>
-                        <div className="container col form-group">
-                            <label className="mt-4">Enter Confirmation Code</label>
-                            <input 
-                                type="text" 
-                                className="form-control mb-3" 
-                                id="exampleInputConfirmation" 
-                                value={confirmationCode}
-                                onChange={(event) => setConfirmationCode(event.target.value)} 
-                                required
-                            />
-                            
-                            <button 
-                                type="submit" 
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={confirmSignUp}>
+                        <form className='container col p-5' style={{alignSelf : "right"}}  onSubmit={confirmSignUp}>
+
+                            {/* Display sign-up error message if sign-up fails */}
+                            {signUpError && <p className='text-danger'>{signUpError}</p>}
+
+                            <div className="container col form-group">
+                                <label className="mt-4">Enter Confirmation Code</label>
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    id="exampleInputConfirmation" 
+                                    value={confirmationCode}
+                                    onChange={(event) => setConfirmationCode(event.target.value)} 
+                                    required
+                                />
+                                
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-primary btn-lg mt-3"
+                                >
                                     Submit
-                            </button>
-                        </div>
-                        // </form>
+                                </button>
+                            </div>
+                        </form>
                         )
                     }
-                    {/* Display sign-up error message if sign-up fails */}
-                    {signUpError && <p>{signUpError}</p>}
 
                 </div>
             </div>
