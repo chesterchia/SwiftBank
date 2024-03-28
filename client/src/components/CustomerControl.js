@@ -206,7 +206,7 @@ const CustomerControl = ()=>{
 {MyAccounts.map(account => (
 /* <form action='http://localhost:3000/customer/transaction' method='GET'> */
 /* <form action='https://d199qw39w1odyg.cloudfront.net/customer/transaction' method='GET'> */
-<form action='https://d1qkdc7jobqunx.cloudfront.net/customer/transaction' method='GET'>
+<form action='https://d2gtf2x91ob5a.cloudfront.net/customer/transaction' method='GET'>
 <div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key = {account.account_id}>
 
 <hr className='mt-5'></hr>

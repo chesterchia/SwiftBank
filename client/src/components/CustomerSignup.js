@@ -101,10 +101,6 @@ const CustomerSignup = () => {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                id="exampleInputUsername" 
-                                name="username" 
-                                aria-describedby="usernameHelp" 
-                                value={username}
                                 onChange={(event) => setUsername(event.target.value)} 
                                 required
                             />
@@ -112,19 +108,14 @@ const CustomerSignup = () => {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                id="exampleInputEmail" 
-                                name="email" 
                                 aria-describedby="emailHelp" 
-                                value={email}
                                 onChange={(event) => setEmail(event.target.value)} 
                                 required
                             />
                             <label className="mt-4">Password</label>
                             <input 
-                                type="text" 
+                                type="password" 
                                 className="form-control" 
-                                id="exampleInputPassword" 
-                                value={password}
                                 onChange={(event) => setPassword(event.target.value)}  required
                             />
 
