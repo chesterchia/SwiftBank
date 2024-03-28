@@ -10,21 +10,29 @@ import PostCustomer from './components/AdminCustomer';
 import CustomerControl from './components/CustomerControl';
 import PostBranch from './components/AdminBranch';
 import Transaction from './components/Transaction';
+import Signup from './components/CustomerSignup.js';
+import { Account } from './components/Account.js';
+import Status from './components/Status.js';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/' exact component={LoginPage}/>
-        <Route path='/customer/login' exact component = {CustomerLogin} />
-        <Route path='/employee/login' exact component = {EmployeeLogin} />
-        <Route path='/employee' exact component = {EmployeeControl} />
-        <Route path='/admin/employee' exact component = {PostEmployee} />
-        <Route path='/admin/customer' exact component = {PostCustomer} />
-        <Route path='/admin/branch' exact component = {PostBranch} />
-        <Route path='/customer' exact component= {CustomerControl}/>
-        <Route path='/customer/transaction' exact component= {Transaction}/>
-      </Switch>
+      <Account>
+        <Status>
+          <Switch>
+            <Route path='/' exact component={LoginPage}/>
+            <Route path='/customer/signup' exact component= {Signup}/>
+            <Route path='/customer/login' exact component = {CustomerLogin} />
+            <Route path='/employee/login' exact component = {EmployeeLogin} />
+            <Route path='/employee' exact component = {EmployeeControl} />
+            <Route path='/admin/employee' exact component = {PostEmployee} />
+            <Route path='/admin/customer' exact component = {PostCustomer} />
+            <Route path='/admin/branch' exact component = {PostBranch} />
+            <Route path='/customer' exact component= {CustomerControl}/>
+            <Route path='/customer/transaction' exact component= {Transaction}/>
+          </Switch>
+        </Status>
+      </Account>
     </Router>
   );
 }
