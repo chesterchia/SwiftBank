@@ -15,7 +15,7 @@ const CustomerControl = ()=>{
     const [current_balance,setBalance] = useState('');
     const [Alltransaction,SetTransaction] = useState([]);
 
-    const { logout } = useContext(AccountContext);
+    const { logout, getAccessToken } = useContext(AccountContext);
 
     const DeleteAccount = async(account_id)=>{
       try {
@@ -91,6 +91,11 @@ const CustomerControl = ()=>{
         }
     };
     useEffect(()=>{
+        // Accessing Token
+        const accessToken = getAccessToken();
+        if(accessToken){
+          console.log("Access Token: " + accessToken);
+        }
         GetCustomer();
         // eslint-disable-next-line
       },[]);

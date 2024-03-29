@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createContext } from "react";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import Pool from "../userpool";
@@ -7,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 const AccountContext = createContext();
 
 const Account = (props) => {
+
+    const [session, setSession] = useState(null);
 
     const history = useHistory();
 
@@ -18,6 +20,7 @@ const Account = (props) => {
                     if (err) {
                         reject();
                     } else {
+                        setSession(session);
                         resolve(session);
                     }
                 });
@@ -65,8 +68,14 @@ const Account = (props) => {
         }
     };
 
+    const getAccessToken = () => {
+        if(session){
+            return session.getAccessToken().getJwtToken()
+        }
+    }
+
     return (
-        <AccountContext.Provider value={{ authenticate, getSession, logout }}>
+        <AccountContext.Provider value={{ authenticate, getSession, logout, getAccessToken }}>
             {props.children}
         </AccountContext.Provider>
     );
