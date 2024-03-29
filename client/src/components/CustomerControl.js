@@ -19,7 +19,7 @@ const CustomerControl = ()=>{
 
     const DeleteAccount = async(account_id)=>{
       try {
-        const query = await fetch(`http://13.212.206.255:5000/${account_id}`,{
+        const query = await fetch(`http://13.250.98.93:5000/${account_id}`,{
         // const query = await fetch(`http://localhost:5000/${account_id}`,{
           method : 'DELETE'
         });
@@ -32,7 +32,7 @@ const CustomerControl = ()=>{
     const AddAccount = async()=>{
       const customer_id = document.getElementById('customer_id_value').value;
       const body = {customer_id,current_balance};
-      const query = await fetch('http://13.212.206.255:5000/accounts',{
+      const query = await fetch('http://13.250.98.93:5000/accounts',{
       // const query = await fetch('http://localhost:5000/accounts',{
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
@@ -44,7 +44,7 @@ const CustomerControl = ()=>{
     };
     const GetAccountDetails = async()=>{
       try {
-        const query = await fetch(`http://13.212.206.255:5000/accounts/${id}`);
+        const query = await fetch(`http://13.250.98.93:5000/accounts/${id}`);
         // const query = await fetch(`http://localhost:5000/accounts/${id}`);
 
         const data = await query.json();
@@ -57,7 +57,7 @@ const CustomerControl = ()=>{
     const GetTransactions = async()=>{
       try {
         const customer_id = document.getElementById('customer_id_value').value;
-        const query = await fetch(`http://13.212.206.255:5000/transaction/${customer_id}`);
+        const query = await fetch(`http://13.250.98.93:5000/transaction/${customer_id}`);
         // const query = await fetch(`http://localhost:5000/transaction/${customer_id}`);
         const data = await query.json();
         SetTransaction(data);
@@ -73,7 +73,7 @@ const CustomerControl = ()=>{
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            const query = await fetch(`http://13.212.206.255:5000/customer/${username}`);
+            const query = await fetch(`http://13.250.98.93:5000/customer/${username}`);
             // const query = await fetch(`http://localhost:5000/customer/${username}`);
             const data = query.json();
             console.log(data);

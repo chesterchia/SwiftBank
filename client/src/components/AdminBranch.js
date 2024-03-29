@@ -8,7 +8,7 @@ const PostBranch = ()=>{
     const [zip_code,setZipCode] = useState('');
     const DeleteBranch = async(branch_id) =>{
         try {
-          const query = fetch(`http://13.212.206.255:5000/branch/${branch_id}`,{
+          const query = fetch(`http://13.250.98.93:5000/branch/${branch_id}`,{
               method : 'DELETE'
           });
           console.log(query);
@@ -21,7 +21,7 @@ const PostBranch = ()=>{
     const PostBranch = async()=> {
       try {
         const body = {name,house_no,city,zip_code};
-        const query = fetch('http://13.212.206.255:5000/branch',{
+        const query = fetch('http://13.250.98.93:5000/branch',{
           method : 'POST',
           headers : {'Content-Type' : 'application/json'},
           body : JSON.stringify(body)
@@ -33,7 +33,7 @@ const PostBranch = ()=>{
     };
     const GetBranches = async()=> {
       try {
-        const query = await fetch('http://13.212.206.255:5000/branch');
+        const query = await fetch('http://13.250.98.93:5000/branch');
         const data =await query.json();
         setBranch(data);
         console.log(data);

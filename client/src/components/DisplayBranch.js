@@ -4,7 +4,7 @@ const DisplayBranch = () =>{
     const [AllBranches,setBranches] = useState([]);
     const GetBranches = async() =>{
         try {
-            const query = await fetch('http://13.212.206.255:5000/Branch',{
+            const query = await fetch('http://13.250.98.93:5000/Branch',{
                 method : 'GET'
             });
             const data = await query.json();
