@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const FormTransaction = ()=>{
+    const history = useHistory();
+
     const [account_id,SetAccid] = useState('');
     const [branch_id,SetBrid] = useState('');
     const [amount,SetAmt] = useState('');
     const GetAccountID = ()=>{
         const parameters = window.location.search.substring(1).split("&");
         const temp = parameters[0].split("=");
-        console.log(parameters);
-        console.log(temp);
         SetAccid(temp[1]);
     };
     useEffect(()=>{
         GetAccountID();
     },[]);
+
     const DoTransaction = ()=>{
         const action = document.getElementById('inputState').value;
         try {
@@ -28,6 +30,11 @@ const FormTransaction = ()=>{
             console.log(error);
         }
     };
+
+    const handleCancel = () => {
+        history.push('/customer?username='+localStorage.getItem('username'));
+    };
+
     return(
     <form className='mt-5 jumbotron' onSubmit={DoTransaction}>
     <h1>Transaction</h1>
@@ -45,6 +52,7 @@ const FormTransaction = ()=>{
       </select>
     </div>
 
+    <button type="submit" className="btn btn-danger mr-3" onClick={handleCancel}>Cancel</button>    
     <button type="submit" className="btn btn-primary">Add</button>
     </form>
   );  

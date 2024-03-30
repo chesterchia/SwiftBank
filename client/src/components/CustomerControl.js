@@ -75,7 +75,7 @@ const CustomerControl = ()=>{
             const username = temp[1];
             const query = await fetch(`http://13.250.98.93:5000/customer/${username}`);
             // const query = await fetch(`http://localhost:5000/customer/${username}`);
-            const data = query.json();
+            const data = await query.json();
             console.log(data);
             setID(data['customer_id']);
             setName(data['name']);
@@ -85,7 +85,7 @@ const CustomerControl = ()=>{
             setCity(data['city']);
             setZipCode(data['zipcode']);
             setUsername(username);
-            
+            localStorage.setItem('username', username);
         } catch (error) {
             console.log(error);
         }
@@ -167,15 +167,14 @@ const CustomerControl = ()=>{
   </button>
 
 <div className="collapse" id="collapseExample">
-
-<div className="form-group shadow p-3 mb-5 bg-white rounded mt-3">
-  <label>Customer Id</label>
-  <input type="text" value={id} className="form-control mb-3" id="customer_id_value" name="username" aria-describedby="emailHelp" disabled  required/>
-  <label >Balance</label>
-  <input type="text" className="form-control" id="exampleInputPassword1" onChange = {e=> setBalance(e.target.value)}  required/>
-    
-<button className="btn btn-primary btn-lg mt-3" onClick={AddAccount}>Add</button>
-</div>
+  <div className="form-group shadow p-3 mb-5 bg-white rounded mt-3">
+    <label>Customer Id</label>
+    <input type="text" value={id} className="form-control mb-3" id="customer_id_value" name="username" aria-describedby="emailHelp" disabled  required/>
+    <label >Balance</label>
+    <input type="text" className="form-control" id="exampleInputPassword1" onChange = {e=> setBalance(e.target.value)}  required/>
+      
+  <button className="btn btn-primary btn-lg mt-3" onClick={AddAccount}>Add</button>
+  </div>
 </div>
 
 <div class="collapse" id="alltransaction">
@@ -212,7 +211,7 @@ const CustomerControl = ()=>{
 /* <form action='http://localhost:3000/customer/transaction' method='GET'> */
 /* <form action='https://d199qw39w1odyg.cloudfront.net/customer/transaction' method='GET'> */
 <form action='https://d2gtf2x91ob5a.cloudfront.net/customer/transaction' method='GET'>
-<div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key = {account.account_id}>
+<div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key={`${account.customer_id}-${account.account_id}`}>
 
 <hr className='mt-5'></hr>
 <h1 style={{textAlign : 'left'}}>Savings Account</h1>
