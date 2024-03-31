@@ -72,7 +72,8 @@ const CustomerSignup = () => {
         const zipcode = 1234;
         const body = {name,phone,email,house_no,city,zipcode,username,password};
         // const query = await fetch('http://localhost:5000/customer',{
-        const query = await fetch('http://13.250.98.93:5000/customer',{
+        // const query = await fetch('http://13.250.98.93:5000/customer',{
+        const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
           method : 'POST',
           headers : {'Content-Type' : 'application/json'},
           body : JSON.stringify(body)

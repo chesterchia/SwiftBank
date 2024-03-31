@@ -17,6 +17,8 @@ const CustomerControl = ()=>{
 
     const { logout, getAccessToken } = useContext(AccountContext);
 
+    const accessToken = getAccessToken();
+
     const DeleteAccount = async(account_id)=>{
       try {
         const query = await fetch(`http://13.250.98.93:5000/${account_id}`,{
@@ -73,7 +75,12 @@ const CustomerControl = ()=>{
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            const query = await fetch(`http://13.250.98.93:5000/customer/${username}`);
+            // const query = await fetch(`http://13.250.98.93:5000/customer/${username}`, {
+            //   headers : {'Authorization' : accessToken}
+            // });
+            const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}`, {
+              headers : {'Authorization' : accessToken}
+            });
             // const query = await fetch(`http://localhost:5000/customer/${username}`);
             const data = await query.json();
             console.log(data);
@@ -92,10 +99,10 @@ const CustomerControl = ()=>{
     };
     useEffect(()=>{
         // Accessing Token
-        const accessToken = getAccessToken();
-        if(accessToken){
-          console.log("Access Token: " + accessToken);
-        }
+        // const accessToken = getAccessToken();
+        // if(accessToken){
+        //   console.log("Access Token: " + accessToken);
+        // }
         GetCustomer();
         // eslint-disable-next-line
       },[]);

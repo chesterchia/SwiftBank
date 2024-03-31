@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import { AccountContext } from "./Account";
 
 const PostCustomer = ()=>{
     const [AllCustomers,setCustomers] = useState([]);
@@ -10,6 +11,10 @@ const PostCustomer = ()=>{
     const [zipcode,setZipCode] = useState('');
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
+
+    const { getAccessToken } = useContext(AccountContext);
+
+    const accessToken = getAccessToken();
 
     const DeleteCustomer = async(customer_id)=>{
       try {
@@ -25,11 +30,13 @@ const PostCustomer = ()=>{
     const PostCustomer = async()=> {
       try {
         const body = {name,phone,email,house_no,city,zipcode,username,password};
-        const query = fetch('http://13.250.98.93:5000/customer',{
-          method : 'POST',
-          headers : {'Content-Type' : 'application/json'},
-          body : JSON.stringify(body)
-        });
+        // const query = await fetch('http://localhost:5000/customer',{
+        // const query = await fetch('http://13.250.98.93:5000/customer',{
+          const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
+            method : 'POST',
+            headers : {'Content-Type' : 'application/json'},
+            body : JSON.stringify(body)
+          });
         console.log(query);
       } catch (error) {
         console.log(error);
@@ -37,8 +44,12 @@ const PostCustomer = ()=>{
     };
     const GetCustomers = async()=> {
       try {
-        const get_cust = await fetch('http://13.250.98.93:5000/customer');
-        const data =await get_cust.json();
+        // const get_cust = await fetch('http://localhost:5000/customer');
+        // const get_cust = await fetch('http://13.250.98.93:5000/customer');
+        const get_cust = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer', {
+          headers : {'Authorization' : accessToken}
+        });
+        const data = await get_cust.json();
         setCustomers(data);
         console.log(data);
     } catch (error) {
