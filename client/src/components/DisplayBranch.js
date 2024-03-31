@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 const DisplayBranch = () =>{
     const [AllBranches,setBranches] = useState([]);
-    const GetBranches = async() =>{
+
+    const [jwtAccessToken, setJwtAccessToken] = useState(null);
+
+
+    const { getAccessToken } = useContext(AccountContext);
+
+    const GetBranches = async(accessToken) =>{
         try {
-            const query = await fetch(`http://54.179.141.140:5000/Branch`,{
-                method : 'GET'
+            const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch',{
+                method : 'GET',
+                headers : {'Authorization' : accessToken}
             });
             const data = await query.json();
             setBranches(data);
@@ -14,7 +21,12 @@ const DisplayBranch = () =>{
         }
     };
     useEffect(()=>{
-        GetBranches();
+      const accessToken = getAccessToken();
+      console.log("ADDDD")
+      if(accessToken){
+        setJwtAccessToken(accessToken);
+        GetBranches(accessToken);
+      }
     },[]);
     return (
       <div class='mt-5'> 

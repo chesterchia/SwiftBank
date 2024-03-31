@@ -79,6 +79,7 @@ const Account = (props) => {
                 onSuccess: (data) => {
                     console.log("onSuccess:", data);
                     resolve(data);
+                    setSession(data);
                     history.push(`/customer?username=${Username}`);
                 },
                 onFailure: (err) => {
@@ -109,6 +110,7 @@ const Account = (props) => {
                 onSuccess: (data) => {
                     console.log("onSuccess:", data);
                     resolve(data);
+                    setSession(data);
                     history.push(`/employee?username=${Username}`);
                 },
                 onFailure: (err) => {
@@ -145,7 +147,8 @@ const Account = (props) => {
 
     const getAccessToken = () => {
         if(session){
-            return session.getAccessToken().getJwtToken()
+            console.log(session.getIdToken().getJwtToken())
+            return session.getIdToken().getJwtToken()
         }
     }
 

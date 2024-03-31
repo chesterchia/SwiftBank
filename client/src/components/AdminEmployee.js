@@ -4,9 +4,16 @@ const PostEmployee = ()=>{
   const [AllEmployee, setEmployees] = useState([]);
   const [username,setUsername] = useState('');
   const [user_password,setPassword] = useState('');
+
+  const [jwtAccessToken, setJwtAccessToken] = useState(null);
+
+
+  const { getAccessToken } = useContext(AccountContext);
+
+
   const DeleteEmp= async (username) => {
     try {
-        const delete_emp = await fetch(`http://54.179.141.140:5000/employee/${username}`,{
+        const delete_emp = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee/${username}`,{
             method : "DELETE"
         });
         console.log(delete_emp);
@@ -18,7 +25,7 @@ const PostEmployee = ()=>{
   const AddEmployee = async()=> {
     try {
       const body = {username,user_password};
-      const query = fetch(`http://54.179.141.140:5000/employee`,{
+      const query = fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee',{
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
         body : JSON.stringify(body)
@@ -28,10 +35,12 @@ const PostEmployee = ()=>{
       console.log(error);
     }
   };
-  const GetEmployees = async()=> {
+  const GetEmployees = async(accessToken)=> {
     try {
-      const query = await fetch(`http://54.179.141.140:5000/employee`);
-      const data =await query.json();
+      const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee', {
+        headers : {'Authorization' : accessToken}
+      });
+      const data = await query.json();
       setEmployees(data);
       console.log(data);
   } catch (error) {
@@ -40,7 +49,12 @@ const PostEmployee = ()=>{
   };
 
   useEffect(()=>{
-    GetEmployees();
+    const accessToken = getAccessToken();
+    console.log("ADDDD")
+    if(accessToken){
+      setJwtAccessToken(accessToken);
+      GetEmployees(accessToken);
+    }
 },[]);
     return (
         <div className='container'>

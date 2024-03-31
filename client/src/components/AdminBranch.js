@@ -6,9 +6,13 @@ const PostBranch = ()=>{
     const [house_no,setHouse] = useState('');
     const [city,setCity] = useState('');
     const [zip_code,setZipCode] = useState('');
+    const [jwtAccessToken, setJwtAccessToken] = useState(null);
+
+    const { getAccessToken } = useContext(AccountContext);
+
     const DeleteBranch = async(branch_id) =>{
         try {
-          const query = fetch(`http://54.179.141.140:5000/branch/${branch_id}`,{
+          const query = fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch/${branch_id}`,{
               method : 'DELETE'
           });
           console.log(query);
@@ -21,7 +25,7 @@ const PostBranch = ()=>{
     const PostBranch = async()=> {
       try {
         const body = {name,house_no,city,zip_code};
-        const query = fetch(`http://54.179.141.140:5000/branch`,{
+        const query = fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch',{
           method : 'POST',
           headers : {'Content-Type' : 'application/json'},
           body : JSON.stringify(body)
@@ -31,9 +35,11 @@ const PostBranch = ()=>{
         console.log(error);
       }
     };
-    const GetBranches = async()=> {
+    const GetBranches = async(accessToken)=> {
       try {
-        const query = await fetch(`http://54.179.141.140:5000/branch`);
+        const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch', {
+          headers : {'Authorization' : accessToken}
+        });
         const data =await query.json();
         setBranch(data);
         console.log(data);
@@ -43,7 +49,12 @@ const PostBranch = ()=>{
     };
 
     useEffect(()=>{
-      GetBranches();
+      const accessToken = getAccessToken();
+        console.log("ADDDD")
+        if(accessToken){
+          setJwtAccessToken(accessToken);
+          GetBranches(accessToken);
+        }
   },[]);
 
     return (

@@ -11,14 +11,13 @@ const PostCustomer = ()=>{
     const [zipcode,setZipCode] = useState('');
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
+    const [jwtAccessToken, setJwtAccessToken] = useState(null);
 
     const { getAccessToken } = useContext(AccountContext);
 
-    const accessToken = getAccessToken();
-
     const DeleteCustomer = async(customer_id)=>{
       try {
-        const query =  fetch(`http://54.179.141.140:5000/customer/${customer_id}`,{
+        const query =  fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${customer_id}`,{
           method : 'DELETE'
         });
         console.log(query);
@@ -42,7 +41,7 @@ const PostCustomer = ()=>{
         console.log(error);
       }
     };
-    const GetCustomers = async()=> {
+    const GetCustomers = async(accessToken)=> {
       try {
         // const get_cust = await fetch('http://localhost:5000/customer');
         const get_cust = await fetch(`http://54.179.141.140:5000/customer`, {
@@ -58,7 +57,12 @@ const PostCustomer = ()=>{
     };
 
     useEffect(()=>{
-      GetCustomers();
+      const accessToken = getAccessToken();
+      console.log("ADDDD")
+      if(accessToken){
+        setJwtAccessToken(accessToken);
+        GetCustomers(accessToken);
+      }
   },[]);
 
     return (

@@ -7,23 +7,31 @@ const FormTransaction = ()=>{
     const [account_id,SetAccid] = useState('');
     const [branch_id,SetBrid] = useState('');
     const [amount,SetAmt] = useState('');
+    const [jwtAccessToken, setJwtAccessToken] = useState(null);
+
+    const { getAccessToken } = useContext(AccountContext);
+
     const GetAccountID = ()=>{
         const parameters = window.location.search.substring(1).split("&");
         const temp = parameters[0].split("=");
         SetAccid(temp[1]);
     };
     useEffect(()=>{
+        const accessToken = getAccessToken();
+        console.log("ADDDD")
+        if(accessToken){
+          setJwtAccessToken(accessToken);
+        }
         GetAccountID();
     },[]);
 
     const DoTransaction = ()=>{
         const action = document.getElementById('inputState').value;
         try {
-            const customer_id = localStorage.getItem('customer_id');
-            const body = {customer_id,account_id,branch_id,amount,action};
-            const query = fetch (`http://54.179.141.140:5000/transaction`,{
+            const body = {account_id,branch_id,amount,action};
+            const query = fetch ('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/transaction',{
                 method : 'POST',
-                headers : {'Content-Type':'application/json'},
+                headers : {'Content-Type':'application/json','Authorization' : jwtAccessToken},
                 body : JSON.stringify(body)
             });
             console.log(body);

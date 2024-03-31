@@ -18,13 +18,14 @@ const CustomerControl = ()=>{
 
     const { logout, getAccessToken } = useContext(AccountContext);
 
-    const accessToken = getAccessToken();
+    // const accessToken = getAccessToken();
 
     const DeleteAccount = async(account_id)=>{
       try {
-        const query = await fetch(`http://54.179.141.140:5000/${account_id}`,{
+        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts/${account_id}`,{
         // const query = await fetch(`http://localhost:5000/${account_id}`,{
-          method : 'DELETE'
+          method : 'DELETE',
+          headers : {'Authorization' : jwtAccessToken}
         });
         console.log(query);
       } catch (error) {
@@ -35,10 +36,10 @@ const CustomerControl = ()=>{
     const AddAccount = async()=>{
       const customer_id = document.getElementById('customer_id_value').value;
       const body = {customer_id,current_balance};
-      // const query = await fetch('http://13.250.98.93:5000/accounts',{
-      const query = await fetch(`http://54.179.141.140:5000/accounts`,{
+      const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts',{
+      // const query = await fetch('http://localhost:5000/accounts',{
         method : 'POST',
-        headers : {'Content-Type' : 'application/json'},
+        headers : {'Content-Type' : 'application/json' , 'Authorization' : jwtAccessToken},
         body : JSON.stringify(body)
       });
       window.location.reload();
@@ -47,8 +48,10 @@ const CustomerControl = ()=>{
     };
     const GetAccountDetails = async()=>{
       try {
-        // const query = await fetch(`http://13.250.98.93:5000/accounts/${id}`);
-        const query = await fetch(`http://54.179.141.140:5000/accounts/${id}`);
+        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts/${id}`, {
+          headers : {'Authorization' : jwtAccessToken}
+        });
+        // const query = await fetch(`http://localhost:5000/accounts/${id}`);
 
         const data = await query.json();
         setAccounts(data);
@@ -60,8 +63,10 @@ const CustomerControl = ()=>{
     const GetTransactions = async()=>{
       try {
         const customer_id = document.getElementById('customer_id_value').value;
-        // const query = await fetch(`http://13.250.98.93:5000/transaction/${customer_id}`);
-        const query = await fetch(`http://54.179.141.140:5000/transaction/${customer_id}`);
+        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/transaction/${customer_id}` , {
+            headers : {'Authorization' : jwtAccessToken}
+          });
+        // const query = await fetch(`http://localhost:5000/transaction/${customer_id}`);
         const data = await query.json();
         console.log(data)
         SetTransaction(data);
@@ -70,20 +75,20 @@ const CustomerControl = ()=>{
         console.log(error);
       }
     };
-    const GetCustomer = async()=>{
+    const GetCustomer = async(accessToken)=>{
         try {
             const parameters = window.location.search.substring(1).split("&");
             const temp = parameters[0].split("=");
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            const query = await fetch(`http://54.179.141.140:5000/customer/${username}`, {
+            // const query = await fetch(`http://54.179.141.140:5000/customer/${username}`, {
               // headers : {'Authorization' : accessToken}
             // });
-            // const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}', {
+            console.log("HERE: " + accessToken);
+            const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}`, {
               headers : {'Authorization' : accessToken}
             });
-            // const query = await fetch(`http://localhost:5000/customer/${username}`);
             const data = await query.json();
             console.log(data);
             setID(data['customer_id']);
@@ -102,12 +107,12 @@ const CustomerControl = ()=>{
     };
     useEffect(()=>{
         // Accessing Token
-        // const accessToken = getAccessToken();
-        // if(accessToken){
-        //   setJwtAccessToken(accessToken);
-        //   GetCustomer(accessToken);
-        // }
-        GetCustomer();
+        const accessToken = getAccessToken();
+        console.log("ADDDD")
+        if(accessToken){
+          setJwtAccessToken(accessToken);
+          GetCustomer(accessToken);
+        }
         // eslint-disable-next-line
       },[]);
 
