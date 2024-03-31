@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { AccountContext } from "./Account";
 
 const PostCustomer = ()=>{
@@ -18,7 +18,7 @@ const PostCustomer = ()=>{
 
     const DeleteCustomer = async(customer_id)=>{
       try {
-        const query =  fetch(`http://13.250.98.93:5000/customer/${customer_id}`,{
+        const query =  fetch(`http://54.179.141.140:5000/customer/${customer_id}`,{
           method : 'DELETE'
         });
         console.log(query);
@@ -31,8 +31,8 @@ const PostCustomer = ()=>{
       try {
         const body = {name,phone,email,house_no,city,zipcode,username,password};
         // const query = await fetch('http://localhost:5000/customer',{
-        // const query = await fetch('http://13.250.98.93:5000/customer',{
-          const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
+        const query = await fetch(`http://54.179.141.140:5000/customer`,{
+          // const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
             body : JSON.stringify(body)
@@ -45,8 +45,8 @@ const PostCustomer = ()=>{
     const GetCustomers = async()=> {
       try {
         // const get_cust = await fetch('http://localhost:5000/customer');
-        // const get_cust = await fetch('http://13.250.98.93:5000/customer');
-        const get_cust = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer', {
+        const get_cust = await fetch(`http://54.179.141.140:5000/customer`, {
+        // const get_cust = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer', {
           headers : {'Authorization' : accessToken}
         });
         const data = await get_cust.json();

@@ -14,6 +14,7 @@ const CustomerControl = ()=>{
     const [MyAccounts,setAccounts] = useState([]);
     const [current_balance,setBalance] = useState('');
     const [Alltransaction,SetTransaction] = useState([]);
+    const [jwtAccessToken, setJwtAccessToken] = useState(null);
 
     const { logout, getAccessToken } = useContext(AccountContext);
 
@@ -21,7 +22,7 @@ const CustomerControl = ()=>{
 
     const DeleteAccount = async(account_id)=>{
       try {
-        const query = await fetch(`http://13.250.98.93:5000/${account_id}`,{
+        const query = await fetch(`http://54.179.141.140:5000/${account_id}`,{
         // const query = await fetch(`http://localhost:5000/${account_id}`,{
           method : 'DELETE'
         });
@@ -34,8 +35,8 @@ const CustomerControl = ()=>{
     const AddAccount = async()=>{
       const customer_id = document.getElementById('customer_id_value').value;
       const body = {customer_id,current_balance};
-      const query = await fetch('http://13.250.98.93:5000/accounts',{
-      // const query = await fetch('http://localhost:5000/accounts',{
+      // const query = await fetch('http://13.250.98.93:5000/accounts',{
+      const query = await fetch(`http://54.179.141.140:5000/accounts`,{
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
         body : JSON.stringify(body)
@@ -46,8 +47,8 @@ const CustomerControl = ()=>{
     };
     const GetAccountDetails = async()=>{
       try {
-        const query = await fetch(`http://13.250.98.93:5000/accounts/${id}`);
-        // const query = await fetch(`http://localhost:5000/accounts/${id}`);
+        // const query = await fetch(`http://13.250.98.93:5000/accounts/${id}`);
+        const query = await fetch(`http://54.179.141.140:5000/accounts/${id}`);
 
         const data = await query.json();
         setAccounts(data);
@@ -59,9 +60,10 @@ const CustomerControl = ()=>{
     const GetTransactions = async()=>{
       try {
         const customer_id = document.getElementById('customer_id_value').value;
-        const query = await fetch(`http://13.250.98.93:5000/transaction/${customer_id}`);
-        // const query = await fetch(`http://localhost:5000/transaction/${customer_id}`);
+        // const query = await fetch(`http://13.250.98.93:5000/transaction/${customer_id}`);
+        const query = await fetch(`http://54.179.141.140:5000/transaction/${customer_id}`);
         const data = await query.json();
+        console.log(data)
         SetTransaction(data);
         console.log(data);
       } catch (error) {
@@ -75,10 +77,10 @@ const CustomerControl = ()=>{
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            // const query = await fetch(`http://13.250.98.93:5000/customer/${username}`, {
-            //   headers : {'Authorization' : accessToken}
+            const query = await fetch(`http://54.179.141.140:5000/customer/${username}`, {
+              // headers : {'Authorization' : accessToken}
             // });
-            const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}`, {
+            // const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}', {
               headers : {'Authorization' : accessToken}
             });
             // const query = await fetch(`http://localhost:5000/customer/${username}`);
@@ -93,6 +95,7 @@ const CustomerControl = ()=>{
             setZipCode(data['zipcode']);
             setUsername(username);
             localStorage.setItem('username', username);
+            localStorage.setItem('customer_id', data['customer_id'])
         } catch (error) {
             console.log(error);
         }
@@ -101,7 +104,8 @@ const CustomerControl = ()=>{
         // Accessing Token
         // const accessToken = getAccessToken();
         // if(accessToken){
-        //   console.log("Access Token: " + accessToken);
+        //   setJwtAccessToken(accessToken);
+        //   GetCustomer(accessToken);
         // }
         GetCustomer();
         // eslint-disable-next-line
@@ -215,9 +219,9 @@ const CustomerControl = ()=>{
   
 
 {MyAccounts.map(account => (
-/* <form action='http://localhost:3000/customer/transaction' method='GET'> */
-/* <form action='https://d199qw39w1odyg.cloudfront.net/customer/transaction' method='GET'> */
-<form action='https://d2gtf2x91ob5a.cloudfront.net/customer/transaction' method='GET'>
+<form action='http://swift-bank.s3-website-ap-southeast-1.amazonaws.com/customer/transaction' method='GET'>
+{/* <form action='http://localhost:3000/customer/transaction' method='GET'> */}
+{/* /* <form action='https://d199qw39w1odyg.cloudfront.net/customer/transaction' method='GET'> */}
 <div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key={`${account.customer_id}-${account.account_id}`}>
 
 <hr className='mt-5'></hr>

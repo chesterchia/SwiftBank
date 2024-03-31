@@ -19,8 +19,9 @@ const FormTransaction = ()=>{
     const DoTransaction = ()=>{
         const action = document.getElementById('inputState').value;
         try {
-            const body = {account_id,branch_id,amount,action};
-            const query = fetch ('http://13.250.98.93:5000/transaction',{
+            const customer_id = localStorage.getItem('customer_id');
+            const body = {customer_id,account_id,branch_id,amount,action};
+            const query = fetch (`http://54.179.141.140:5000/transaction`,{
                 method : 'POST',
                 headers : {'Content-Type':'application/json'},
                 body : JSON.stringify(body)

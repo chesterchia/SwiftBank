@@ -123,6 +123,8 @@ const Account = (props) => {
         });
     };
 
+    // setSession(data);
+
     const logout = () => {
         const user = Pool.getCurrentUser();
         if(user) {

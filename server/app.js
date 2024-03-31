@@ -1,15 +1,53 @@
 const express = require('express');
 const app = express();
+const redis = require('redis');
+const { promisify } = require('util');
 
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
 const pool =require('./database.js');
+const { error } = require('console');
 const port = 5000;
 app.listen(port, ()=>{
     console.log(`Listening at port ${port}...`);
 });
+
+// Redis client
+const redisClient = redis.createClient('6379', '127.0.0.1');
+redisClient.on('error', error => console.error(error));
+const redisSet = promisify(redisClient.set).bind(redisClient);
+const redisGet = promisify(redisClient.get).bind(redisClient);
+
+// Set a key value pair for Redis
+app.post('/setValue', async(req, res) => {
+    if (req.body.key && req.body.value) {
+        try {
+            await redisSet(req.body.key, req.body.value);
+            res.send();
+        } catch (e) {
+            res.json(e);
+        }
+    }
+    else {
+        res.status(400).json({error: 'Wrong input.'});
+    }
+})
+
+// Get a key value pair for Redis
+app.get('/getValue/:key', async(req, res) => {
+    if (!req.params.key) {
+        return res.status(400).json({error: 'Wrong input.'});
+    }
+    try {
+        const value = await redisGet(req.params.key);
+        res.json(value);
+    } catch (e) {
+        res.json(e);
+    }
+})
+
 //POST
 app.post('/customer', async(req,res)=>{
     try {
@@ -113,10 +151,16 @@ app.delete('/branch/:branch_id',async(req,res)=>{
 });
 app.post('/transaction',async(req,res)=>{
     try {
-        console.log(req.body);
-        const {account_id,branch_id,amount,action} = req.body;
-        const query = await pool.query('call insert_into_transaction($1,$2,$3,$4)',[account_id,branch_id,amount,action]);
-        res.send('Inserted record into Transaction table...');       
+        // console.log(req.body);
+        const {customer_id,account_id,branch_id,amount,action} = req.body;
+        try {
+            // console.log(customer_id)
+            const query = await pool.query('call insert_into_transaction($1,$2,$3,$4)',[account_id,branch_id,amount,action]);
+            await redisSet(customer_id, JSON.stringify(query.rows));
+            res.send('Inserted record into Transaction table...');
+        } catch (e) {
+            res.json(e);
+        }       
     } catch (error) {
         console.log(req.query);   
     }
@@ -125,11 +169,23 @@ app.post('/transaction',async(req,res)=>{
 app.get('/transaction/:customer_id',async(req,res)=>{
     try {
         const {customer_id} =req.params;
-        const query = await pool.query('select transaction.*,accounts.customer_id from transaction left join accounts on accounts.account_id=transaction.account_id where accounts.customer_id=cast($1 as integer)',[customer_id]);
-        console.log(query.rows);
-        res.send(query.rows);
-    } catch (error) {
-        console.log(error);
+        const value = await redisGet(customer_id);
+        if (value == null || value == "[]") {
+            try {
+                const query = await pool.query('select transaction.*,accounts.customer_id from transaction left join accounts on accounts.account_id=transaction.account_id where accounts.customer_id=cast($1 as integer)',[customer_id]);
+                // console.log(query.rows);
+                console.log(value)
+                await redisSet(customer_id, JSON.stringify(query.rows));
+                res.send(query.rows);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        else {
+            res.send(value);
+        }
+    } catch (e) {
+        res.json(e);
     }
 });
 //get
