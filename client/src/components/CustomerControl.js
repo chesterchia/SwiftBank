@@ -82,7 +82,7 @@ const CustomerControl = ()=>{
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            // const query = await fetch(`http://54.255.229.9:5000/customer/${username}`, {
+            // const query = await fetch(`http://54.179.141.140:5000/customer/${username}`, {
               // headers : {'Authorization' : accessToken}
             // });
             console.log("HERE: " + accessToken);

@@ -30,7 +30,7 @@ const PostCustomer = ()=>{
       try {
         const body = {name,phone,email,house_no,city,zipcode,username,password};
         // const query = await fetch('http://localhost:5000/customer',{
-        const query = await fetch(`http://54.255.229.9:5000/customer`,{
+        const query = await fetch(`http://54.179.141.140:5000/customer`,{
           // const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
@@ -44,7 +44,7 @@ const PostCustomer = ()=>{
     const GetCustomers = async(accessToken)=> {
       try {
         // const get_cust = await fetch('http://localhost:5000/customer');
-        const get_cust = await fetch(`http://54.255.229.9:5000/customer`, {
+        const get_cust = await fetch(`http://54.179.141.140:5000/customer`, {
         // const get_cust = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer', {
           headers : {'Authorization' : accessToken}
         });
