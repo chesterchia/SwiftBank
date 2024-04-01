@@ -15,7 +15,7 @@ app.listen(port, ()=>{
 });
 
 // Redis client
-const redisClient = redis.createClient('6379', '127.0.0.1');
+const redisClient = redis.createClient('6379', '13.212.247.35');
 redisClient.on('error', error => console.error(error));
 const redisSet = promisify(redisClient.set).bind(redisClient);
 const redisGet = promisify(redisClient.get).bind(redisClient);
