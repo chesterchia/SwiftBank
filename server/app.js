@@ -2,10 +2,17 @@ const express = require('express');
 const app = express();
 const redis = require('redis');
 const { promisify } = require('util');
+const AWS = require('aws-sdk');
 
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
+
+AWS.config.update({
+    region: 'ap-southeast-1',
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
+});
 
 const pool =require('./database.js');
 const { error } = require('console');
@@ -47,6 +54,9 @@ app.get('/getValue/:key', async(req, res) => {
         res.json(e);
     }
 })
+
+// SNS
+const sns = new AWS.SNS();
 
 //POST
 app.post('/customer', async(req,res)=>{
@@ -151,13 +161,30 @@ app.delete('/branch/:branch_id',async(req,res)=>{
 });
 app.post('/transaction',async(req,res)=>{
     try {
-        // console.log(req.body);
-        const {customer_id,account_id,branch_id,amount,action} = req.body;
+        const {customer_id,customer_email,account_id,branch_id,amount,action} = req.body;
         try {
-            // console.log(customer_id)
             const query = await pool.query('call insert_into_transaction($1,$2,$3,$4)',[account_id,branch_id,amount,action]);
             await redisSet(customer_id, JSON.stringify(query.rows));
             res.send('Inserted record into Transaction table...');
+            const message_data = {
+                message: `You have deposited SGD ${amount} to Account ${account_id} from Branch ${branch_id}`,
+                email: customer_email
+            }
+            const params = {
+                Message: JSON.stringify(message_data),
+                TopicArn: 'arn:aws:sns:ap-southeast-1:381492006108:transaction_topic.fifo',
+                MessageGroupId: 'swiftbank',
+                MessageDeduplicationId: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+            };
+            sns.publish(params, (err, data) => {
+                console.log(data)
+                if (err) {
+                    console.error('Failed to publish message to SNS: ', err);
+                }
+                else {
+                    console.log('Message published successfully: ', data.MessageId);
+                }
+            })
         } catch (e) {
             res.json(e);
         }       

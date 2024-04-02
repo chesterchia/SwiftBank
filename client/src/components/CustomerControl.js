@@ -107,7 +107,8 @@ const CustomerControl = ()=>{
             setZipCode(data['zipcode']);
             setUsername(username);
             localStorage.setItem('username', username);
-            localStorage.setItem('customer_id', data['customer_id'])
+            localStorage.setItem('customer_id', data['customer_id']);
+            localStorage.setItem('customer_email', data['email']);
         } catch (error) {
             console.log(error);
         }

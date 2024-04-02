@@ -31,8 +31,9 @@ const FormTransaction = ()=>{
         event.preventDefault();
         const action = document.getElementById('inputState').value;
         const customer_id = localStorage.getItem('customer_id');
+        const customer_email = localStorage.getItem('customer_email');
         try {
-            const body = {customer_id, account_id,branch_id,amount,action};
+            const body = {customer_id,customer_email,account_id,branch_id,amount,action};
             const query = fetch ('https://backendapis.swiftbank.tech/transaction',{
                 method : 'POST',
                 headers : {'Content-Type':'application/json', 'Authorization' : jwtAccessToken},
