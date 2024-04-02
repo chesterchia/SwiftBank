@@ -25,3 +25,6 @@ docker pull redis:alpine
 docker run -it -p 6379:6379 -d --name redis-server redis:alpine
 ```
 Download RedisInsight and test connection.
+
+# Configuration for Lambda in Notification pipeline
+https://github.com/xuanli286/notification-function.git
