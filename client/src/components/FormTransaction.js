@@ -33,7 +33,7 @@ const FormTransaction = ()=>{
         const customer_id = localStorage.getItem('customer_id');
         try {
             const body = {customer_id, account_id,branch_id,amount,action};
-            const query = fetch ('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/transaction',{
+            const query = fetch ('https://backendapis.swiftbank.tech/transaction',{
                 method : 'POST',
                 headers : {'Content-Type':'application/json', 'Authorization' : jwtAccessToken},
                 body : JSON.stringify(body)

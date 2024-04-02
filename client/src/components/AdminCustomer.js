@@ -17,7 +17,7 @@ const PostCustomer = ()=>{
 
     const DeleteCustomer = async(customer_id)=>{
       try {
-        const query =  fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${customer_id}`,{
+        const query =  fetch(`https://backendapis.swiftbank.tech/customer/${customer_id}`,{
           method : 'DELETE'
         });
         console.log(query);
@@ -30,8 +30,8 @@ const PostCustomer = ()=>{
       try {
         const body = {name,phone,email,house_no,city,zipcode,username,password};
         // const query = await fetch('http://localhost:5000/customer',{
-        const query = await fetch(`http://54.179.141.140:5000/customer`,{
-          // const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer',{
+        // const query = await fetch(`http://54.179.141.140:5000/customer`,{
+          const query = await fetch('https://backendapis.swiftbank.tech/customer',{
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
             body : JSON.stringify(body)
@@ -44,8 +44,8 @@ const PostCustomer = ()=>{
     const GetCustomers = async(accessToken)=> {
       try {
         // const get_cust = await fetch('http://localhost:5000/customer');
-        const get_cust = await fetch(`http://54.179.141.140:5000/customer`, {
-        // const get_cust = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer', {
+        // const get_cust = await fetch(`http://54.179.141.140:5000/customer`, {
+        const get_cust = await fetch('https://backendapis.swiftbank.tech/customer', {
           headers : {'Authorization' : accessToken}
         });
         const data = await get_cust.json();

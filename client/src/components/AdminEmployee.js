@@ -14,7 +14,7 @@ const PostEmployee = ()=>{
 
   const DeleteEmp= async (username) => {
     try {
-        const delete_emp = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee/${username}`,{
+        const delete_emp = await fetch(`https://backendapis.swiftbank.tech/employee/${username}`,{
             method : "DELETE"
         });
         console.log(delete_emp);
@@ -26,7 +26,7 @@ const PostEmployee = ()=>{
   const AddEmployee = async()=> {
     try {
       const body = {username,user_password};
-      const query = fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee',{
+      const query = fetch('https://backendapis.swiftbank.tech/employee',{
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
         body : JSON.stringify(body)
@@ -38,7 +38,7 @@ const PostEmployee = ()=>{
   };
   const GetEmployees = async(accessToken)=> {
     try {
-      const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/employee', {
+      const query = await fetch('https://backendapis.swiftbank.tech/employee', {
         headers : {'Authorization' : accessToken}
       });
       const data = await query.json();

@@ -26,7 +26,7 @@ const CustomerControl = ()=>{
 
     const DeleteAccount = async(account_id)=>{
       try {
-        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts/${account_id}`,{
+        const query = await fetch(`https://backendapis.swiftbank.tech/accounts/${account_id}`,{
         // const query = await fetch(`http://localhost:5000/${account_id}`,{
           method : 'DELETE',
           headers : {'Authorization' : jwtAccessToken}
@@ -40,7 +40,7 @@ const CustomerControl = ()=>{
     const AddAccount = async()=>{
       const customer_id = document.getElementById('customer_id_value').value;
       const body = {customer_id,current_balance};
-      const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts',{
+      const query = await fetch('https://backendapis.swiftbank.tech/accounts',{
       // const query = await fetch('http://localhost:5000/accounts',{
         method : 'POST',
         headers : {'Content-Type' : 'application/json' , 'Authorization' : jwtAccessToken},
@@ -52,7 +52,7 @@ const CustomerControl = ()=>{
     };
     const GetAccountDetails = async()=>{
       try {
-        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/accounts/${id}`, {
+        const query = await fetch(`https://backendapis.swiftbank.tech/accounts/${id}`, {
           headers : {'Authorization' : jwtAccessToken}
         });
         // const query = await fetch(`http://localhost:5000/accounts/${id}`);
@@ -67,7 +67,7 @@ const CustomerControl = ()=>{
     const GetTransactions = async()=>{
       try {
         const customer_id = document.getElementById('customer_id_value').value;
-        const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/transaction/${customer_id}` , {
+        const query = await fetch(`https://backendapis.swiftbank.tech/transaction/${customer_id}` , {
             headers : {'Authorization' : jwtAccessToken}
           });
         // const query = await fetch(`http://localhost:5000/transaction/${customer_id}`);
@@ -93,7 +93,7 @@ const CustomerControl = ()=>{
               // headers : {'Authorization' : accessToken}
             // });
             console.log("HERE: " + accessToken);
-            const query = await fetch(`https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/customer/${username}`, {
+            const query = await fetch(`https://backendapis.swiftbank.tech/customer/${username}`, {
               headers : {'Authorization' : accessToken}
             });
             const data = await query.json();

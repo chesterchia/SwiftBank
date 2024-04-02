@@ -6,7 +6,7 @@ const DisplayBranch = () =>{
 
     const GetBranches = async() =>{
         try {
-            const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch',{
+            const query = await fetch('https://backendapis.swiftbank.tech/branch',{
                 method : 'GET'
             });
             const data = await query.json();
