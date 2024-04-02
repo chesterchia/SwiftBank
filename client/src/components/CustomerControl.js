@@ -1,8 +1,12 @@
 import React,{useState, useEffect, useContext} from 'react';
 import avatar from '../images/avatar.png';
 import { AccountContext } from "./Account";
+import { useHistory } from 'react-router-dom';
 
 const CustomerControl = ()=>{
+
+  const history = useHistory();
+
     const [id,setID] = useState('');
     const [name,setName] = useState('');
     const [phone,setPhone] = useState('');
@@ -75,6 +79,9 @@ const CustomerControl = ()=>{
         console.log(error);
       }
     };
+    const GoTransactions = async(account_id)=>{
+      history.push(`/customer/transaction?account_no=${account_id}`);
+    };
     const GetCustomer = async(accessToken)=>{
         try {
             const parameters = window.location.search.substring(1).split("&");
@@ -82,7 +89,7 @@ const CustomerControl = ()=>{
             console.log(parameters);
             console.log(temp);
             const username = temp[1];
-            // const query = await fetch(`http://54.179.141.140:5000/customer/${username}`, {
+            // const query = await fetch(`http://54.255.229.9:5000/customer/${username}`, {
               // headers : {'Authorization' : accessToken}
             // });
             console.log("HERE: " + accessToken);
@@ -224,9 +231,7 @@ const CustomerControl = ()=>{
   
 
 {MyAccounts.map(account => (
-<form action='http://swift-bank.s3-website-ap-southeast-1.amazonaws.com/customer/transaction' method='GET'>
-{/* <form action='http://localhost:3000/customer/transaction' method='GET'> */}
-{/* /* <form action='https://d199qw39w1odyg.cloudfront.net/customer/transaction' method='GET'> */}
+<form>
 <div className="card shadow-lg p-3 mb-5 bg-white rounded collapse" id="AccountDetails" key={`${account.customer_id}-${account.account_id}`}>
 
 <hr className='mt-5'></hr>
@@ -260,7 +265,7 @@ const CustomerControl = ()=>{
     <div className="input-group-append">
     </div>
   </div>
-  <button className='btn btn-info' type='submit'>Transaction</button>
+  <button className='btn btn-info' type='submit' onClick={()=>GoTransactions(account.account_id)}>Make Transaction</button>
   <button className='btn btn-danger ml-3' onClick={()=>DeleteAccount(account.account_id)}>Delete</button>
 </div>
 </div>

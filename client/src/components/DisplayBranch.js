@@ -4,16 +4,10 @@ import { AccountContext } from "./Account";
 const DisplayBranch = () =>{
     const [AllBranches,setBranches] = useState([]);
 
-    const [jwtAccessToken, setJwtAccessToken] = useState(null);
-
-
-    const { getAccessToken } = useContext(AccountContext);
-
-    const GetBranches = async(accessToken) =>{
+    const GetBranches = async() =>{
         try {
             const query = await fetch('https://qepipkmv82.execute-api.ap-southeast-1.amazonaws.com/v1/branch',{
-                method : 'GET',
-                headers : {'Authorization' : accessToken}
+                method : 'GET'
             });
             const data = await query.json();
             setBranches(data);
@@ -22,12 +16,8 @@ const DisplayBranch = () =>{
         }
     };
     useEffect(()=>{
-      const accessToken = getAccessToken();
-      console.log("ADDDD")
-      if(accessToken){
-        setJwtAccessToken(accessToken);
-        GetBranches(accessToken);
-      }
+      console.log("ADDDD");
+      GetBranches();
     },[]);
     return (
       <div class='mt-5'> 

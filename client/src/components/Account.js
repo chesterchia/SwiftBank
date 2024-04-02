@@ -147,7 +147,7 @@ const Account = (props) => {
 
     const getAccessToken = () => {
         if(session){
-            console.log(session.getIdToken().getJwtToken())
+            // console.log(session.getIdToken().getJwtToken())
             return session.getIdToken().getJwtToken()
         }
     }
