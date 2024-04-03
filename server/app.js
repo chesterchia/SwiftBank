@@ -164,7 +164,8 @@ app.post('/transaction',async(req,res)=>{
         const {customer_id,customer_email,account_id,branch_id,amount,action} = req.body;
         try {
             const query = await pool.query('call insert_into_transaction($1,$2,$3,$4)',[account_id,branch_id,amount,action]);
-            await redisSet(customer_id, JSON.stringify(query.rows));
+            const new_query = await pool.query('select transaction.*,accounts.customer_id from transaction left join accounts on accounts.account_id=transaction.account_id where accounts.customer_id=cast($1 as integer)',[customer_id]);
+            await redisSet(customer_id, JSON.stringify(new_query.rows));
             res.send('Inserted record into Transaction table...');
             const message_data = {
                 message: `You have deposited SGD ${amount} to Account ${account_id} from Branch ${branch_id}`,
